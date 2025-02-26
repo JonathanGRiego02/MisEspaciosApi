@@ -41,17 +41,21 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Driver JDBC para SQL Server -->
 		<dependency>
-			<groupId>com.google.firebase</groupId>
-			<artifactId>firebase-admin</artifactId>
-			<version>9.4.3</version>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>12.2.0.jre11</version>
 		</dependency>
 
+		<!-- HikariCP -->
 		<dependency>
-			<groupId>com.google.cloud</groupId>
-			<artifactId>google-cloud-firestore</artifactId>
-			<version>3.30.3</version>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>5.1.0</version>
 		</dependency>
+
+
 
 	</dependencies>
 
