@@ -8,6 +8,7 @@ public class Lugar {
     private int idType;
     private double posX;
     private double posY;
+    private int likes;
 
     public Lugar() {}
 
@@ -75,5 +76,13 @@ public class Lugar {
 
     public void setPosY(double posY) {
         this.posY = posY;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }
