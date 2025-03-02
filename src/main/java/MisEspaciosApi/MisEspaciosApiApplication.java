@@ -1,4 +1,4 @@
-package misespacios.MisEspaciosApi;
+package MisEspaciosApi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
