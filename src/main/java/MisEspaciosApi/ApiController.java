@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import org.mindrot.jbcrypt.BCrypt;
 
 
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:*")
 public class ApiController {
 
     private final UserRepository userRepository;
@@ -53,22 +54,21 @@ public class ApiController {
     }
 
     // POST: Validar login
+    @CrossOrigin(origins = "http://127.0.0.1:3000", allowedHeaders = "*", methods = {RequestMethod.POST, RequestMethod.GET})
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest) {
         Optional<User> userOptional = userRepository.findByNickname(loginRequest.getNickname());
         System.out.println("Solicitud recibida: " + loginRequest.getNickname());
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-
-            // Verificar contraseña hasheada
             if (BCrypt.checkpw(loginRequest.getPasswd(), user.getPasswd())) {
-                Map<String, String> response = new HashMap<>();
-                response.put("message", "Login exitoso");
-                return ResponseEntity.ok(response); // 👈 Retorna JSON
+                System.out.println("Login exitoso");
+                return ResponseEntity.ok().build(); // Solo un 200 OK sin cuerpo
             }
         }
 
-            return ResponseEntity.status(401).body(Map.of("error", "Credenciales incorrectas"));
+        return ResponseEntity.status(401).build(); // Solo un 401 sin cuerpo (para error de autenticación)
     }
+
 }
