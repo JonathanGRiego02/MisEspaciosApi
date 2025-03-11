@@ -16,7 +16,10 @@ CREATE TABLE Users (
 
 CREATE TABLE Place_Types(
 	id_type int identity(1,1) CONSTRAINT PK_Types PRIMARY KEY,
-	nameType nvarchar(50)
+	name_type nvarchar(50) NOT NULL,
+    icon nvarchar(50),
+    id_user int,
+    CONSTRAINT FK_TypesUsers FOREIGN KEY (id_user) REFERENCES Users(id_user)
 );
 
 CREATE TABLE Places(
@@ -30,6 +33,15 @@ CREATE TABLE Places(
 	id_type int,
 	CONSTRAINT FK_PlacesUsers FOREIGN KEY (id_user) REFERENCES Users(id_user),
 	CONSTRAINT FK_PlacesTypes FOREIGN KEY (id_type) REFERENCES place_types(id_type)
+);
+
+CREATE TABLE Comments(
+    id_comment int identity(1,1) CONSTRAINT PK_Comments PRIMARY KEY,
+    comment nvarchar(250),
+    id_user int,
+    id_place int,
+    CONSTRAINT FK_CommentsUsers FOREIGN KEY (id_user) REFERENCES Users(id_user),
+    CONSTRAINT FK_CommentsPlaces FOREIGN KEY (id_place) REFERENCES Places(id_place)
 );
 
 

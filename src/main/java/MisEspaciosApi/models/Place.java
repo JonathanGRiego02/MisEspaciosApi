@@ -9,30 +9,30 @@ public class Place {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idPlace") // Asegura que se use el nombre exacto de la tabla SQL
+    @Column(name = "id_place") // Asegura que se use el nombre exacto de la tabla SQL
     private Long idPlace;
 
-    @Column(name = "namePlace", length = 50)
+    @Column(name = "name_place", length = 50)
     private String namePlace;
 
-    @Column(name = "descPlace", length = 250)
+    @Column(name = "desc_place", length = 250)
     private String descPlace;
 
-    @Column(name = "posX", precision = 9, scale = 6)
-    private BigDecimal posX;
+    @Column(name = "pos_x", precision = 9, scale = 6)
+    private BigDecimal pos_x;
 
-    @Column(name = "posY", precision = 9, scale = 6)
-    private BigDecimal posY;
+    @Column(name = "pos_y", precision = 9, scale = 6)
+    private BigDecimal pos_y;
 
     @Column(name = "likes")
     private Integer likes;
 
     @ManyToOne
-    @JoinColumn(name = "idUser", referencedColumnName = "idUser", nullable = true) // Asegura la FK
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = true) // Asegura la FK
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "idType", referencedColumnName = "idType", nullable = true) // Asegura la FK
+    @JoinColumn(name = "id_type", referencedColumnName = "id_type", nullable = true) // Asegura la FK
     private PlaceTypes placeTypes;
 
     public Place() {}
@@ -47,11 +47,11 @@ public class Place {
     public String getDescPlace() { return descPlace; }
     public void setDescPlace(String descPlace) { this.descPlace = descPlace; }
 
-    public BigDecimal getPosX() { return posX; }
-    public void setPosX(BigDecimal posX) { this.posX = posX; }
+    public BigDecimal getpos_x() { return pos_x; }
+    public void setpos_x(BigDecimal pos_x) { this.pos_x = pos_x; }
 
-    public BigDecimal getPosY() { return posY; }
-    public void setPosY(BigDecimal posY) { this.posY = posY; }
+    public BigDecimal getpos_y() { return pos_y; }
+    public void setpos_y(BigDecimal pos_y) { this.pos_y = pos_y; }
 
     public Integer getLikes() { return likes; }
     public void setLikes(Integer likes) { this.likes = likes; }

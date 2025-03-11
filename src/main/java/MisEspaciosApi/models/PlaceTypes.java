@@ -8,18 +8,23 @@ public class PlaceTypes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idType") // Asegura que el nombre de la columna sea exacto
-    private Long idType;
+    @Column(name = "id_type")
+    private Long id_type;
 
-    @Column(name = "nameType", length = 50) // Se agrega para respetar el nombre exacto
-    private String nameType;
+    @Column(name = "name_type", length = 50)
+    private String name_type;
 
-    public PlaceTypes() {}
+    @Column(name = "icon", length = 50)
+    private String icon;
+
+    @ManyToOne
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = true) // Asegura la FK
+    private User id_user;
 
     // Getters y Setters
-    public Long getIdType() { return idType; }
-    public void setIdType(Long idType) { this.idType = idType; }
+    public Long getid_type() { return id_type; }
+    public void setid_type(Long id_type) { this.id_type = id_type; }
 
-    public String getNameType() { return nameType; }
-    public void setNameType(String nameType) { this.nameType = nameType; }
+    public String getname_type() { return name_type; }
+    public void setname_type(String name_type) { this.name_type = name_type; }
 }

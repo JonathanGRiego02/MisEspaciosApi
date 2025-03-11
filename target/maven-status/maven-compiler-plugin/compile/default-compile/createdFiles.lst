@@ -1,0 +1,12 @@
+MisEspaciosApi\SecurityConfig.class
+MisEspaciosApi\WebConfig.class
+MisEspaciosApi\models\PlaceTypes.class
+MisEspaciosApi\models\LoginRequest.class
+MisEspaciosApi\models\Place.class
+MisEspaciosApi\repository\PlaceTypeRepository.class
+MisEspaciosApi\models\User.class
+MisEspaciosApi\ApiController.class
+MisEspaciosApi\MisEspaciosApiApplication.class
+MisEspaciosApi\PasswordChecker.class
+MisEspaciosApi\repository\PlaceRepository.class
+MisEspaciosApi\repository\UserRepository.class
