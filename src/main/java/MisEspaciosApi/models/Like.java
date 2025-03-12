@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table (name = "\"likes\"")
-public class Likes {
+public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class Likes {
     @JoinColumn(name = "id_place", referencedColumnName = "id_place", nullable = true)
     private Place place;
 
-    public Likes() {}
+    public Like() {}
 
     // Getters y Setters
 

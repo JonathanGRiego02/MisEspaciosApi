@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "\"comments\"")
-public class Comments {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_comment")
@@ -26,7 +26,7 @@ public class Comments {
     @JoinColumn(name = "id_place", referencedColumnName = "id_place", nullable = true)
     private Place place;
 
-    public Comments() {}
+    public Comment() {}
 
     // Getters y Setters
 
