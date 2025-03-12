@@ -38,10 +38,19 @@ CREATE TABLE Places(
 CREATE TABLE Comments(
     id_comment int identity(1,1) CONSTRAINT PK_Comments PRIMARY KEY,
     comment nvarchar(250),
+    commnet_date date,
     id_user int,
     id_place int,
     CONSTRAINT FK_CommentsUsers FOREIGN KEY (id_user) REFERENCES Users(id_user),
     CONSTRAINT FK_CommentsPlaces FOREIGN KEY (id_place) REFERENCES Places(id_place)
+);
+
+CREATE TABLE Likes(
+    id_like int identity(1,1) CONSTRAINT PK_Likes PRIMARY KEY,
+    id_user int,
+    id_place int,
+    CONSTRAINT FK_LikesUsers FOREIGN KEY (id_user) REFERENCES Users(id_user),
+    CONSTRAINT FK_LikesPlaces FOREIGN KEY (id_place) REFERENCES Places(id_place)
 );
 
 
