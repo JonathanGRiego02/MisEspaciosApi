@@ -63,6 +63,39 @@ public class ApiController {
         return placeService.getPlacesWithinBounds(ne_lat, ne_lng, sw_lat, sw_lng);
     }
 
+    // POST: Crear un nuevo lugar
+    @PostMapping("/places")
+    public ResponseEntity<String> createPlace(@RequestParam String namePlace,
+                                              @RequestParam String descPlace,
+                                              @RequestParam Long placeTypeId,
+                                              @RequestParam Long userId) {
+        // Validar si el tipo de lugar existe
+        Optional<PlaceTypes> placeTypeOptional = placeTypeRepository.findById(placeTypeId);
+        if (!placeTypeOptional.isPresent()) {
+            return ResponseEntity.status(400).body("Tipo de lugar no encontrado.");
+        }
+
+        // Validar si el usuario existe
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.status(400).body("Usuario no encontrado.");
+        }
+
+        // Crear un nuevo lugar
+        Place newPlace = new Place();
+        newPlace.setNamePlace(namePlace);
+        newPlace.setDescPlace(descPlace);
+        newPlace.setPlaceType(placeTypeOptional.get());
+        newPlace.setUser(userOptional.get());
+
+        // Guardar el lugar en la base de datos utilizando el servicio
+        placeService.savePlace(newPlace);
+
+        // Devolver una respuesta exitosa
+        return ResponseEntity.status(201).body("Lugar creado con éxito.");
+    }
+
+
     // POST: Validar login
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest) {
