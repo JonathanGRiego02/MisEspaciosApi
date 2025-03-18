@@ -5,6 +5,7 @@
 # API
 
 - Comprobar acceso a todas las tablas (request test)
+- Usar el servicio y no directamente el repositorio importado de jpa
 
 ---------------------------
 # Frontend
