@@ -44,11 +44,23 @@ public class ApiController {
         return placeTypeRepository.findAll();
     }
 
-    // GET: Obtener todos los lugares
+    /* GET: Obtener todos los lugares
     @GetMapping("/places")
     public List<Place> getAllPlaces() {
         System.out.println("Getting places");
-        return placeService.obtenerTodosLosLugares();
+        return placeService.ObtainAllPlaces();
+    }
+    */
+
+
+    // Get: Getting the places within the bounds dinamyically as the user moves the map
+    @GetMapping("/places")
+    public List<Place> getPlacesInBounds(@RequestParam double ne_lat, @RequestParam double ne_lng,
+                                         @RequestParam double sw_lat, @RequestParam double sw_lng) {
+        System.out.println("Getting places within bounds");
+
+        // Usar el servicio para obtener lugares dentro de los límites especificados
+        return placeService.getPlacesWithinBounds(ne_lat, ne_lng, sw_lat, sw_lng);
     }
 
     // POST: Validar login

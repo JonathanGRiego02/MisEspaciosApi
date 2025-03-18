@@ -21,7 +21,12 @@ public class PlaceService {
     }
 
     // Método para obtener todos los lugares
-    public List<Place> obtenerTodosLosLugares() {
+    public List<Place> ObtainAllPlaces() {
         return placeRepository.findAll();
+    }
+
+    public List<Place> getPlacesWithinBounds(double ne_lat, double ne_lng, double sw_lat, double sw_lng) {
+        // Usar el repositorio para obtener los lugares dentro de los límites
+        return placeRepository.findPlacesWithinBounds(sw_lat, ne_lat, sw_lng, ne_lng);
     }
 }
