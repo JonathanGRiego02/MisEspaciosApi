@@ -18,6 +18,8 @@ CREATE TABLE Place_Types(
 	id_type int identity(1,1) CONSTRAINT PK_Types PRIMARY KEY,
 	name_type nvarchar(50) NOT NULL,
     icon nvarchar(50),
+    id_user int,
+    CONSTRAINT FK_TypesUsers FOREIGN KEY (id_user) REFERENCES Users(id_user)
 );
 
 CREATE TABLE Places(

@@ -3,18 +3,15 @@ package MisEspaciosApi;
 import MisEspaciosApi.models.Place;
 import MisEspaciosApi.models.PlaceTypes;
 import MisEspaciosApi.models.User;
-import MisEspaciosApi.repository.PlaceRepository;
-import MisEspaciosApi.repository.PlaceTypeRepository;
 import MisEspaciosApi.repository.UserRepository;
+import MisEspaciosApi.repository.PlaceTypeRepository;
 import MisEspaciosApi.models.LoginRequest;
+import MisEspaciosApi.services.PlaceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.mindrot.jbcrypt.BCrypt;
 
-
-
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -24,12 +21,13 @@ public class ApiController {
 
     private final UserRepository userRepository;
     private final PlaceTypeRepository placeTypeRepository;
-    private final PlaceRepository placeRepository;
+    private final PlaceService placeService;
 
-    public ApiController(UserRepository userRepository, PlaceTypeRepository placeTypeRepository, PlaceRepository placeRepository) {
+    // Inyección de los repositorios y servicios
+    public ApiController(UserRepository userRepository, PlaceTypeRepository placeTypeRepository, PlaceService placeService) {
         this.userRepository = userRepository;
         this.placeTypeRepository = placeTypeRepository;
-        this.placeRepository = placeRepository;
+        this.placeService = placeService;
     }
 
     // GET: Obtener todos los usuarios
@@ -50,11 +48,10 @@ public class ApiController {
     @GetMapping("/places")
     public List<Place> getAllPlaces() {
         System.out.println("Getting places");
-        return placeRepository.findAll();
+        return placeService.obtenerTodosLosLugares();
     }
 
     // POST: Validar login
-    @CrossOrigin(origins = "http://127.0.0.1:3002", allowedHeaders = "*", methods = {RequestMethod.POST, RequestMethod.GET})
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest) {
         Optional<User> userOptional = userRepository.findByNickname(loginRequest.getNickname());
@@ -68,10 +65,21 @@ public class ApiController {
             }
         }
 
-        return ResponseEntity.status(401).build(); 
+        return ResponseEntity.status(401).build();
     }
 
-    // POST: Crear un nuevo usuario
-    
+    // Endpoint para obtener los lugares de un usuario específico
+    @GetMapping("/places/user/{userId}")
+    public ResponseEntity<List<Place>> getPlacesByUserId(@PathVariable Long userId) {
+        // Usamos el servicio para obtener los lugares del usuario
+        List<Place> places = placeService.obtenerLugaresPorUsuario(userId);
 
+        // Si no hay lugares, devolver un estado no content
+        if (places.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        // Si hay lugares, devolver los resultados con un estado OK
+        return ResponseEntity.ok(places);
+    }
 }
