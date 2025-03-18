@@ -10,19 +10,20 @@ CREATE TABLE Users (
 	id_user int identity(1,1) CONSTRAINT PK_Usuarios PRIMARY KEY,
 	nickname nvarchar(50) UNIQUE NOT NULL,
 	passwd nvarchar(255) NOT NULL,
-	nameUser nvarchar(50) NOT NULL,
-	surnameUser nvarchar(50) NOT NULL 
+	name_user nvarchar(50) NOT NULL,
+	surname_user nvarchar(50) NOT NULL
 );
 
 CREATE TABLE Place_Types(
 	id_type int identity(1,1) CONSTRAINT PK_Types PRIMARY KEY,
-	nameType nvarchar(50)
+	name_type nvarchar(50) NOT NULL,
+    icon nvarchar(50),
 );
 
 CREATE TABLE Places(
 	id_place int identity(1,1) CONSTRAINT PK_Places PRIMARY KEY,
-	namePlace nvarchar(50),
-	descPlace nvarchar(250),
+	name_place nvarchar(50),
+	desc_place nvarchar(250),
 	posX DECIMAL(9,6),
 	posY DECIMAL(9,6),
 	likes int,
@@ -30,6 +31,24 @@ CREATE TABLE Places(
 	id_type int,
 	CONSTRAINT FK_PlacesUsers FOREIGN KEY (id_user) REFERENCES Users(id_user),
 	CONSTRAINT FK_PlacesTypes FOREIGN KEY (id_type) REFERENCES place_types(id_type)
+);
+
+CREATE TABLE Comments(
+    id_comment int identity(1,1) CONSTRAINT PK_Comments PRIMARY KEY,
+    comment nvarchar(250),
+    commnet_date date,
+    id_user int,
+    id_place int,
+    CONSTRAINT FK_CommentsUsers FOREIGN KEY (id_user) REFERENCES Users(id_user),
+    CONSTRAINT FK_CommentsPlaces FOREIGN KEY (id_place) REFERENCES Places(id_place)
+);
+
+CREATE TABLE Likes(
+    id_like int identity(1,1) CONSTRAINT PK_Likes PRIMARY KEY,
+    id_user int,
+    id_place int,
+    CONSTRAINT FK_LikesUsers FOREIGN KEY (id_user) REFERENCES Users(id_user),
+    CONSTRAINT FK_LikesPlaces FOREIGN KEY (id_place) REFERENCES Places(id_place)
 );
 
 

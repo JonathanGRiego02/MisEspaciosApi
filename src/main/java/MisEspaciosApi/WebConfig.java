@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         // Permite el acceso desde http://127.0.0.1:3000
         registry.addMapping("/api/**")
-                .allowedOrigins("http://127.0.0.1:3000")
+                .allowedOrigins("http://127.0.0.1:3002")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowCredentials(true)
                 .allowedHeaders("*");

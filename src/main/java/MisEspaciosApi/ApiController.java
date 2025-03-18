@@ -54,7 +54,7 @@ public class ApiController {
     }
 
     // POST: Validar login
-    @CrossOrigin(origins = "http://127.0.0.1:3000", allowedHeaders = "*", methods = {RequestMethod.POST, RequestMethod.GET})
+    @CrossOrigin(origins = "http://127.0.0.1:3002", allowedHeaders = "*", methods = {RequestMethod.POST, RequestMethod.GET})
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest) {
         Optional<User> userOptional = userRepository.findByNickname(loginRequest.getNickname());
@@ -64,11 +64,14 @@ public class ApiController {
             User user = userOptional.get();
             if (BCrypt.checkpw(loginRequest.getPasswd(), user.getPasswd())) {
                 System.out.println("Login exitoso");
-                return ResponseEntity.ok().build(); // Solo un 200 OK sin cuerpo
+                return ResponseEntity.ok().build();
             }
         }
 
-        return ResponseEntity.status(401).build(); // Solo un 401 sin cuerpo (para error de autenticación)
+        return ResponseEntity.status(401).build(); 
     }
+
+    // POST: Crear un nuevo usuario
+    
 
 }
