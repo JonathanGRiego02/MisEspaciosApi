@@ -1,13 +1,14 @@
 # Base de datos
 
-- Crear tabla de comentarios y likes
+
 ---------------------------
 # API
 
-- Comprobar acceso a todas las tablas (request test)
-- Usar el servicio y no directamente el repositorio importado de jpa
+-  Solicitud POST: para introducir un lugar a la base de datos
+-  Solicitud POST: Registrar un usuario
 
 ---------------------------
 # Frontend
 
-- Pagina data viewver para pruebas con el crud
+- Menu lateral
+- Formulario de registro
