@@ -53,6 +53,14 @@ CREATE TABLE Likes(
     CONSTRAINT FK_LikesPlaces FOREIGN KEY (id_place) REFERENCES Places(id_place)
 );
 
+CREATE TABLE Followers (
+    id_follower int identity(1,1) CONSTRAINT PK_Followers PRIMARY KEY,
+    id_user int,
+    id_followed int,
+    CONSTRAINT FK_FollowersUsers FOREIGN KEY (id_user) REFERENCES Users(id_user),
+    CONSTRAINT FK_FollowersFollowed FOREIGN KEY (id_followed) REFERENCES Users(id_user)
+)
+
 
 
 

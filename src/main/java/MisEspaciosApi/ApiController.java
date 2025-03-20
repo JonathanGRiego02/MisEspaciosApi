@@ -44,14 +44,6 @@ public class ApiController {
         return placeTypeRepository.findAll();
     }
 
-    /* GET: Obtener todos los lugares
-    @GetMapping("/places")
-    public List<Place> getAllPlaces() {
-        System.out.println("Getting places");
-        return placeService.ObtainAllPlaces();
-    }
-    */
-
 
     // Get: Getting the places within the bounds dinamyically as the user moves the map
     @GetMapping("/places")
