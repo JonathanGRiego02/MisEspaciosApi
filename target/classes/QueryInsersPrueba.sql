@@ -78,4 +78,11 @@ VALUES (2, 3);
 INSERT INTO Followers (id_user, id_followed)
 VALUES (3, 1);
 
+insert into places values
+                       ('user1 place', 'lugar del user1', 28.502563, -16.220424, 10, 2, 2),
+                       ('user2 place', 'lugar del user2', 28.502638, -16.211713, 10, 3, 3),
+                       ('user3 place', 'lugar del user3', 28.506947, -16.217710, 10, 4, 2)
+
+
+
 
