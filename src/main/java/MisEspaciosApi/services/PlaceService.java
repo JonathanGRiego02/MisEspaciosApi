@@ -15,23 +15,23 @@ public class PlaceService {
         this.placeRepository = placeRepository;
     }
 
-    // Método para obtener los lugares de un usuario específico
+    // Method to get places by user
     public List<Place> obtenerLugaresPorUsuario(Long userId) {
         return placeRepository.findPlacesByUserId(userId);
     }
 
-    // Método para obtener todos los lugares
+    // Method to get all places
     public List<Place> ObtainAllPlaces() {
         return placeRepository.findAll();
     }
 
-    // Método para obtener lugares dentro de un rango de coordenadas
+    // Method to get places by coordenates
     public List<Place> getPlacesWithinBounds(double ne_lat, double ne_lng, double sw_lat, double sw_lng) {
         // Usar el repositorio para obtener los lugares dentro de los límites
         return placeRepository.findPlacesWithinBounds(sw_lat, ne_lat, sw_lng, ne_lng);
     }
 
-    // Método para guardar un lugar
+    // Method to save a place
     public void savePlace(Place place) {
         placeRepository.save(place);  // Guardamos el lugar usando el repositorio
     }
