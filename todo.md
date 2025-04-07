@@ -4,11 +4,12 @@
 ---------------------------
 # API
 
--  Solicitud POST: para introducir un lugar a la base de datos
--  Solicitud POST: Registrar un usuario
+- Solicitud POST: para introducir un lugar a la base de datos
+- Solicitud POST: Registrar un usuario
+- Ajustar el get a los cambios de la base de datos
 
 ---------------------------
 # Frontend
 
-- Menu lateral
+- Pestañas del menú lateral (Mi perfil empezado)
 - Formulario de registro

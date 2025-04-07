@@ -1,27 +1,27 @@
 -- Eliminar datos de tablas dependientes primero
 DELETE FROM Likes;
-DBCC CHECKIDENT ('Likes', RESEED, 0);
+DBCC CHECKIDENT ('Likes', RESEED, 1);
 
 DELETE FROM Comments;
-DBCC CHECKIDENT ('Comments', RESEED, 0);
+DBCC CHECKIDENT ('Comments', RESEED, 1);
 
 DELETE FROM Followers;
-DBCC CHECKIDENT ('Followers', RESEED, 0);
+DBCC CHECKIDENT ('Followers', RESEED, 1);
 
 DELETE FROM Places;
-DBCC CHECKIDENT ('Places', RESEED, 0);
+DBCC CHECKIDENT ('Places', RESEED, 1);
 
 DELETE FROM Place_Types;
-DBCC CHECKIDENT ('Place_Types', RESEED, 0);
+DBCC CHECKIDENT ('Place_Types', RESEED, 1);
 
 DELETE FROM Users;
-DBCC CHECKIDENT ('Users', RESEED, 0);
+DBCC CHECKIDENT ('Users', RESEED, 1);
 
 INSERT INTO Users (nickname, passwd, email, name_user, surname_user, profile_img, private)
 VALUES
-    ('user1', '$2a$10$UYwobJvayI1C9rvb8gkLCOvVM.26l5Q/ClMKcCpO9oCfPmdsCzp8K', 'user1@gmail.com','Juan', 'Pérez', NULL, 0),
-    ('user2', '$2a$10$/5R8JFkH3HGkEbrq7r8ITOT4GNW5zgcg0vZt9Q85SIIITTXSy/vpm', 'user2@gmail.com' , 'Ana', 'Gómez', NULL, 0),
-    ('user3', '$2a$10$P9sCrltcO95yABZtQkSWNu8cUa8DCmUmUSO9D/klNnqTNKv7p1tRa', 'user3@gmail.com', 'Carlos', 'Fernández', NULL, 0);
+    ('user1', '$2a$10$UYwobJvayI1C9rvb8gkLCOvVM.26l5Q/ClMKcCpO9oCfPmdsCzp8K', 'user1@gmail.com','Juan', 'Pérez', NULL, 0), -- password123
+    ('user2', '$2a$10$/5R8JFkH3HGkEbrq7r8ITOT4GNW5zgcg0vZt9Q85SIIITTXSy/vpm', 'user2@gmail.com' , 'Ana', 'Gómez', NULL, 0),  -- prueba1
+    ('user3', '$2a$10$P9sCrltcO95yABZtQkSWNu8cUa8DCmUmUSO9D/klNnqTNKv7p1tRa', 'user3@gmail.com', 'Carlos', 'Fernández', NULL, 0); -- prueba2
 
 -- Inserts para Place_Types
 INSERT INTO Place_Types (name_type, icon, id_user)

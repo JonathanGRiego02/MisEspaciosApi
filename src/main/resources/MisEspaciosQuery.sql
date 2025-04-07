@@ -8,7 +8,7 @@ go
 
 CREATE TABLE Users (
 	id_user int identity(1,1) CONSTRAINT PK_Usuarios PRIMARY KEY,
-	nickname nvarchar(50) UNIQUE NOT NULL UNIQUE,
+	nickname nvarchar(50) UNIQUE NOT NULL,
     profile_img VARBINARY(MAX),
    	email nvarchar(50) UNIQUE NOT NULL,
 	passwd nvarchar(255) NOT NULL,
