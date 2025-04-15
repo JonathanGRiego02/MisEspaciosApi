@@ -19,9 +19,9 @@ DBCC CHECKIDENT ('Users', RESEED, 1);
 
 INSERT INTO Users (nickname, passwd, email, name_user, surname_user, profile_img, private)
 VALUES
-    ('user1', '$2a$10$UYwobJvayI1C9rvb8gkLCOvVM.26l5Q/ClMKcCpO9oCfPmdsCzp8K', 'user1@gmail.com','Juan', 'Pérez', NULL, 0),
-    ('user2', '$2a$10$/5R8JFkH3HGkEbrq7r8ITOT4GNW5zgcg0vZt9Q85SIIITTXSy/vpm', 'user2@gmail.com' , 'Ana', 'Gómez', NULL, 0),
-    ('user3', '$2a$10$P9sCrltcO95yABZtQkSWNu8cUa8DCmUmUSO9D/klNnqTNKv7p1tRa', 'user3@gmail.com', 'Carlos', 'Fernández', NULL, 0);
+    ('user1', '$2a$10$UYwobJvayI1C9rvb8gkLCOvVM.26l5Q/ClMKcCpO9oCfPmdsCzp8K', 'user1@gmail.com','Juan', 'Pérez', NULL, 0), -- password123
+    ('user2', '$2a$10$/5R8JFkH3HGkEbrq7r8ITOT4GNW5zgcg0vZt9Q85SIIITTXSy/vpm', 'user2@gmail.com' , 'Ana', 'Gómez', NULL, 0),  -- prueba1
+    ('user3', '$2a$10$P9sCrltcO95yABZtQkSWNu8cUa8DCmUmUSO9D/klNnqTNKv7p1tRa', 'user3@gmail.com', 'Carlos', 'Fernández', NULL, 0); -- prueba2
 
 -- Inserts para Place_Types
 INSERT INTO Place_Types (name_type, icon, id_user)

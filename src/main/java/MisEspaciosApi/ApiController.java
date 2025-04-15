@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -19,7 +21,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:*")
 public class ApiController {
 
-    private final UserService userService;  // Usamos el UserService en lugar del UserRepository directamente
+    private final UserService userService;
     private final PlaceTypeRepository placeTypeRepository;
     private final PlaceService placeService;
 
@@ -56,12 +58,13 @@ public class ApiController {
 
     // Get: Getting the places within the bounds dynamically as the user moves the map
     @GetMapping("/places")
-    public List<Place> getPlacesInBounds(@RequestParam double ne_lat, @RequestParam double ne_lng,
-                                         @RequestParam double sw_lat, @RequestParam double sw_lng) {
-        System.out.println("Getting places within bounds");
-
-        // Usar el servicio para obtener lugares dentro de los límites especificados
-        return placeService.getPlacesWithinBounds(ne_lat, ne_lng, sw_lat, sw_lng);
+    public List<Place> getPlacesInBounds(@RequestParam double ne_lat,
+                                         @RequestParam double ne_lng,
+                                         @RequestParam double sw_lat,
+                                         @RequestParam double sw_lng,
+                                         @RequestParam Long userId) {
+        System.out.println("Getting places within bounds for user: " + userId);
+        return placeService.getPlacesWithinBounds(ne_lat, ne_lng, sw_lat, sw_lng, userId);
     }
 
     // POST: new place
@@ -98,20 +101,26 @@ public class ApiController {
 
     // POST: validate login
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest) {
-        Optional<User> userOptional = userService.getUserByNickname(loginRequest.getNickname());  // Usamos el servicio para obtener al usuario
+    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest loginRequest) {
+        Optional<User> userOptional = userService.getUserByNickname(loginRequest.getNickname());
         System.out.println("Solicitud recibida: " + loginRequest.getNickname());
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (BCrypt.checkpw(loginRequest.getPasswd(), user.getPasswd())) {
                 System.out.println("Login exitoso");
-                return ResponseEntity.ok().build();
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("id_user", user.getid_user());
+                response.put("nickname", user.getNickname());
+
+                return ResponseEntity.ok(response);
             }
         }
 
         return ResponseEntity.status(401).build();
     }
+
 
     // GET: places by user
     @GetMapping("/places/user/{userId}")

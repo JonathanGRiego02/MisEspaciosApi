@@ -26,6 +26,12 @@ public class User {
     @Column(name = "surname_user", nullable = false, length = 50)
     private String surname_user;
 
+    @Column(name = "private", nullable = false)
+    private boolean isPrivate;
+
+    @Column(name = "profile_img", nullable = true, length = 255)
+    private String profile_img;
+
     public User() {}
 
     // Getters y Setters
@@ -46,4 +52,14 @@ public class User {
 
     public String getEmail() {return email;}
     public void setEmail(String email) {this.email = email;}
+
+    public boolean isPrivate() {return isPrivate;}
+    public void setPrivate(boolean aPrivate) {isPrivate = aPrivate;}
+
+    public String getProfile_img() {
+        return profile_img;
+    }
+    public void setProfile_img(String profile_img) {
+        this.profile_img = profile_img;
+    }
 }

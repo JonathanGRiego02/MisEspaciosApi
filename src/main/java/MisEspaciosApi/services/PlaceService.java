@@ -26,9 +26,10 @@ public class PlaceService {
     }
 
     // Method to get places by coordenates
-    public List<Place> getPlacesWithinBounds(double ne_lat, double ne_lng, double sw_lat, double sw_lng) {
-        // Usar el repositorio para obtener los lugares dentro de los límites
-        return placeRepository.findPlacesWithinBounds(sw_lat, ne_lat, sw_lng, ne_lng);
+    public List<Place> getPlacesWithinBounds(double ne_lat, double ne_lng,
+                                             double sw_lat, double sw_lng,
+                                             Long userId) {
+        return placeRepository.findVisiblePlacesWithinBounds(sw_lat, ne_lat, sw_lng, ne_lng, userId);
     }
 
     // Method to save a place

@@ -9,7 +9,7 @@ go
 CREATE TABLE Users (
 	id_user int identity(1,1) CONSTRAINT PK_Usuarios PRIMARY KEY,
 	nickname nvarchar(50) UNIQUE NOT NULL,
-    profile_img VARBINARY(MAX),
+    profile_img nvarchar(255),
    	email nvarchar(50) UNIQUE NOT NULL,
 	passwd nvarchar(255) NOT NULL,
 	name_user nvarchar(50) NOT NULL,
@@ -20,8 +20,8 @@ CREATE TABLE Users (
 CREATE TABLE Place_Types(
 	id_type int identity(1,1) CONSTRAINT PK_Types PRIMARY KEY,
 	name_type nvarchar(50) NOT NULL,
-    	icon nvarchar(50),
-    	id_user int,
+    icon nvarchar(255),
+    id_user int,
    	 CONSTRAINT FK_TypesUsers FOREIGN KEY (id_user) REFERENCES Users(id_user)
 );
 
@@ -29,8 +29,8 @@ CREATE TABLE Places(
 	id_place int identity(1,1) CONSTRAINT PK_Places PRIMARY KEY,
 	name_place nvarchar(50),
 	desc_place nvarchar(250),
-   	image VARBINARY(MAX),
-    	pos_x DECIMAL(9,6),
+   	image nvarchar(255),
+    pos_x DECIMAL(9,6),
 	pos_y DECIMAL(9,6),
 	likes int,
 	id_user int,

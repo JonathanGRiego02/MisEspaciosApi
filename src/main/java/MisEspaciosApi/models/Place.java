@@ -9,7 +9,7 @@ public class Place {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_place") // Asegura que se use el nombre exacto de la tabla SQL
+    @Column(name = "id_place")
     private Long idPlace;
 
     @Column(name = "name_place", length = 50)
@@ -27,12 +27,18 @@ public class Place {
     @Column(name = "likes")
     private Integer likes;
 
+    @Column(name = "image", length = 255)
+    private String image;
+
+    @Column(name = "private", nullable = false)
+    private boolean isPrivate;
+
     @ManyToOne
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = true) // Asegura la FK
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = true)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "id_type", referencedColumnName = "id_type", nullable = true) // Asegura la FK
+    @JoinColumn(name = "id_type", referencedColumnName = "id_type", nullable = true)
     private PlaceTypes placeTypes;
 
     public Place() {}
@@ -55,6 +61,12 @@ public class Place {
 
     public Integer getLikes() { return likes; }
     public void setLikes(Integer likes) { this.likes = likes; }
+
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
+
+    public boolean isPrivate() { return isPrivate; }
+    public void setPrivate(boolean isPrivate) { this.isPrivate = isPrivate; }
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
