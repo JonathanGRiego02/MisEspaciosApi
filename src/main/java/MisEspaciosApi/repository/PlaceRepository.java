@@ -26,4 +26,5 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
                                               @Param("lngMin") double lngMin,
                                               @Param("lngMax") double lngMax,
                                               @Param("username") String username);
+
 }

@@ -28,4 +28,11 @@ public class UserService {
         return userRepository.findByNickname(nickname);
     }
 
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
 }
