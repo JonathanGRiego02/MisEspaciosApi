@@ -1,5 +1,6 @@
 package MisEspaciosApi.services;
 
+import MisEspaciosApi.dto.PlaceDTO;
 import MisEspaciosApi.models.Place;
 import MisEspaciosApi.repository.PlaceRepository;
 import org.springframework.stereotype.Service;
@@ -15,21 +16,50 @@ public class PlaceService {
         this.placeRepository = placeRepository;
     }
 
-    // Method to get places by user
-    public List<Place> obtenerLugaresPorUsuario(Long userId) {
-        return placeRepository.findPlacesByUserId(userId);
+    // Get places by username
+    public List<PlaceDTO> GetPlacesByUsername(String username) {
+        List<Place> places = placeRepository.findPlacesByUsername(username);
+        return places.stream()
+                .map(place -> new PlaceDTO(
+                        place.getIdPlace(),
+                        place.getNamePlace(),
+                        place.getDescPlace(),
+                        place.getpos_x(),
+                        place.getpos_y(),
+                        place.getLikes(),
+                        place.getImage(),
+                        place.isPrivate(),
+                        place.getPlaceType(),
+                        place.getUser().getNickname()
+                ))
+                .toList();
     }
-
     // Method to get all places
     public List<Place> ObtainAllPlaces() {
         return placeRepository.findAll();
     }
 
-    // Method to get places by coordenates
-    public List<Place> getPlacesWithinBounds(double ne_lat, double ne_lng,
-                                             double sw_lat, double sw_lng,
-                                             Long userId) {
-        return placeRepository.findVisiblePlacesWithinBounds(sw_lat, ne_lat, sw_lng, ne_lng, userId);
+    public List<PlaceDTO> getPlacesWithinBounds(double ne_lat, double ne_lng,
+                                                double sw_lat, double sw_lng,
+                                                String username) {
+        List<Place> places = placeRepository.findVisiblePlacesWithinBounds(
+                sw_lat, ne_lat, sw_lng, ne_lng, username
+        );
+
+        return places.stream()
+                .map(place -> new PlaceDTO(
+                        place.getIdPlace(),
+                        place.getNamePlace(),
+                        place.getDescPlace(),
+                        place.getpos_x(),
+                        place.getpos_y(),
+                        place.getLikes(),
+                        place.getImage(),
+                        place.isPrivate(),
+                        place.getPlaceType(),
+                        place.getUser().getNickname()
+                ))
+                .toList();
     }
 
     // Method to save a place

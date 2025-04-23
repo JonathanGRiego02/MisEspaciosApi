@@ -12,19 +12,18 @@ import java.util.List;
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
-    @Query("SELECT p FROM Place p WHERE p.user.id_user = :userId")
-    List<Place> findPlacesByUserId(Long userId);
+    @Query("SELECT p FROM Place p WHERE p.user.nickname = :username")
+    List<Place> findPlacesByUsername(@Param("username") String username);
 
     @Query("""
-    SELECT p FROM Place p
-    WHERE p.pos_x BETWEEN :latMin AND :latMax
-      AND p.pos_y BETWEEN :lngMin AND :lngMax
-      AND (p.isPrivate = false OR p.user.id_user = :userId)
-""")
+            SELECT p FROM Place p
+            WHERE p.pos_x BETWEEN :latMin AND :latMax
+              AND p.pos_y BETWEEN :lngMin AND :lngMax
+              AND (p.isPrivate = false OR p.user.nickname = :username)
+            """)
     List<Place> findVisiblePlacesWithinBounds(@Param("latMin") double latMin,
                                               @Param("latMax") double latMax,
                                               @Param("lngMin") double lngMin,
                                               @Param("lngMax") double lngMax,
-                                              @Param("userId") Long userId);
-
+                                              @Param("username") String username);
 }

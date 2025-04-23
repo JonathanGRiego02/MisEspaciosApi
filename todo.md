@@ -9,5 +9,9 @@
 ---------------------------
 # Frontend
 
-- Pestañas del menú lateral (Mi perfil empezado)
+- Pestañas del menú lateral 
+  - Perfil
+  - Ajustes
+  - Explorar
+
 - Formulario de registro

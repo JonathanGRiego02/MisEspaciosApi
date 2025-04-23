@@ -36,9 +36,9 @@ VALUES
     ('PizzaManía', 'Mejor pizza de la ciudad', 19.432608, -99.133209, 10, 1, 1, NULL, 0),
     ('Parque Central', 'Ideal para relajarse', 40.712776, -74.005974, 25, 2, 2, NULL, 0),
     ('Museo de Arte Moderno', 'Gran colección de arte', 48.856613, 2.352222, 15, 3, 3, NULL, 0),
-    ('user1 place', 'lugar del user1', 28.502563, -16.220424, 10, 2, 2, NULL, 0),
-    ('user2 place', 'lugar del user2', 28.502638, -16.211713, 10, 3, 3, NULL, 0),
-    ('user3 place', 'lugar del user3', 28.506947, -16.217710, 10, 1, 2, NULL, 0);
+    ('user1 place', 'lugar del user1', 28.502563, -16.220424, 10, 1, 2, NULL, 0),
+    ('user2 place', 'lugar del user2', 28.502638, -16.211713, 10, 2, 3, NULL, 0),
+    ('user3 place', 'lugar del user3', 28.506947, -16.217710, 10, 3, 2, NULL, 0);
 
 -- Inserts para Comments
 INSERT INTO Comments (comment, commnet_date, id_user, id_place)

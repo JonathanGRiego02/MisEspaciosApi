@@ -1,7 +1,8 @@
 package MisEspaciosApi;
 
+import MisEspaciosApi.dto.PlaceDTO;
 import MisEspaciosApi.models.Place;
-import MisEspaciosApi.models.PlaceTypes;
+import MisEspaciosApi.models.PlaceType;
 import MisEspaciosApi.models.User;
 import MisEspaciosApi.models.LoginRequest;
 import MisEspaciosApi.repository.PlaceTypeRepository;
@@ -51,20 +52,27 @@ public class ApiController {
 
     // GET: all places
     @GetMapping("/placeTypes")
-    public List<PlaceTypes> getAllPlaceTypes() {
+    public List<PlaceType> getAllPlaceTypes() {
         System.out.println("Getting place types");
         return placeTypeRepository.findAll();
     }
 
-    // Get: Getting the places within the bounds dynamically as the user moves the map
+    // GET: Getting the places within the bounds dynamically as the user moves the map
     @GetMapping("/places")
-    public List<Place> getPlacesInBounds(@RequestParam double ne_lat,
-                                         @RequestParam double ne_lng,
-                                         @RequestParam double sw_lat,
-                                         @RequestParam double sw_lng,
-                                         @RequestParam Long userId) {
-        System.out.println("Getting places within bounds for user: " + userId);
-        return placeService.getPlacesWithinBounds(ne_lat, ne_lng, sw_lat, sw_lng, userId);
+    public ResponseEntity<List<PlaceDTO>> getPlacesInBounds(@RequestParam double ne_lat,
+                                                            @RequestParam double ne_lng,
+                                                            @RequestParam double sw_lat,
+                                                            @RequestParam double sw_lng,
+                                                            @RequestParam String username) {
+        System.out.println("Getting places within bounds for user: " + username);
+
+        List<PlaceDTO> places = placeService.getPlacesWithinBounds(ne_lat, ne_lng, sw_lat, sw_lng, username);
+
+        if (places.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(places);
     }
 
     // POST: new place
@@ -74,7 +82,7 @@ public class ApiController {
                                               @RequestParam Long placeTypeId,
                                               @RequestParam String userNickname) {
         // place_type exist
-        Optional<PlaceTypes> placeTypeOptional = placeTypeRepository.findById(placeTypeId);
+        Optional<PlaceType> placeTypeOptional = placeTypeRepository.findById(placeTypeId);
         if (!placeTypeOptional.isPresent()) {
             return ResponseEntity.status(400).body("Tipo de lugar no encontrado.");
         }
@@ -122,14 +130,15 @@ public class ApiController {
     }
 
 
-    // GET: places by user
-    @GetMapping("/places/user/{userId}")
-    public ResponseEntity<List<Place>> getPlacesByUserId(@PathVariable Long userId) {
-        List<Place> places = placeService.obtenerLugaresPorUsuario(userId);
+    // GET: places by username
+    @GetMapping("/places/username/{username}")
+    public ResponseEntity<List<PlaceDTO>> getPlacesByUsername(@PathVariable String username) {
+        List<PlaceDTO> places = placeService.GetPlacesByUsername(username);
 
         if (places.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
+
         return ResponseEntity.ok(places);
     }
 }

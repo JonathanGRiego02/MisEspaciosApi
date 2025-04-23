@@ -39,7 +39,7 @@ public class Place {
 
     @ManyToOne
     @JoinColumn(name = "id_type", referencedColumnName = "id_type", nullable = true)
-    private PlaceTypes placeTypes;
+    private PlaceType placeType;
 
     public Place() {}
 
@@ -71,6 +71,6 @@ public class Place {
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
 
-    public PlaceTypes getPlaceType() { return placeTypes; }
-    public void setPlaceType(PlaceTypes placeTypes) { this.placeTypes = placeTypes; }
+    public PlaceType getPlaceType() { return placeType; }
+    public void setPlaceType(PlaceType placeType) { this.placeType = placeType; }
 }
