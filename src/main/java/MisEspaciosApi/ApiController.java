@@ -1,17 +1,20 @@
 package MisEspaciosApi;
 
 import MisEspaciosApi.dto.PlaceDTO;
+import MisEspaciosApi.dto.PlaceTypeDTO;
 import MisEspaciosApi.models.Place;
 import MisEspaciosApi.models.PlaceType;
 import MisEspaciosApi.models.User;
 import MisEspaciosApi.models.LoginRequest;
 import MisEspaciosApi.repository.PlaceTypeRepository;
 import MisEspaciosApi.services.PlaceService;
+import MisEspaciosApi.services.PlaceTypeService;
 import MisEspaciosApi.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,14 +26,14 @@ import java.util.Optional;
 public class ApiController {
 
     private final UserService userService;
-    private final PlaceTypeRepository placeTypeRepository;
     private final PlaceService placeService;
+    private final PlaceTypeService placeTypeService;
 
     // Inyección de los servicios
-    public ApiController(UserService userService, PlaceTypeRepository placeTypeRepository, PlaceService placeService) {
+    public ApiController(UserService userService, PlaceTypeRepository placeTypeRepository, PlaceService placeService, PlaceTypeService placeTypeService) {
         this.userService = userService;
-        this.placeTypeRepository = placeTypeRepository;
         this.placeService = placeService;
+        this.placeTypeService = placeTypeService;
     }
 
     // GET
@@ -52,11 +55,40 @@ public class ApiController {
         return ResponseEntity.notFound().build();
     }
 
-    // All places
-    @GetMapping("/placeTypes")
-    public List<PlaceType> getAllPlaceTypes() {
-        System.out.println("Getting place types");
-        return placeTypeRepository.findAll();
+    // All place types by username
+    @GetMapping("/placeTypes/{nickname}")
+    public ResponseEntity<List<PlaceTypeDTO>> getAllPlaceTypesByUser(@PathVariable String nickname) {
+        System.out.println("Getting place types for user: " + nickname);
+        List<PlaceTypeDTO> placeTypes = placeTypeService.getPlaceTypesByUserNickname(nickname);
+
+        if (placeTypes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(placeTypes);
+    }
+
+    // Create a new place type for a user
+    @PostMapping("/placeTypes")
+    public ResponseEntity<String> createPlaceType(@RequestParam String name_type,
+                                                  @RequestParam String userNickname) {
+        // Find the user by nickname
+        Optional<User> userOptional = userService.getUserByNickname(userNickname);
+
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.status(400).body("User not found.");
+        }
+
+        // Create the new PlaceType
+        PlaceType newPlaceType = new PlaceType();
+        newPlaceType.setName_type(name_type);
+        newPlaceType.setIcon(null); // Icon is not important
+        newPlaceType.setUser(userOptional.get());
+
+        // Save it to the database
+        placeTypeService.savePlaceType(newPlaceType);
+
+        return ResponseEntity.status(201).body("Place type created successfully.");
     }
 
     // Places within the bounds dynamically as the user moves the map
@@ -153,17 +185,19 @@ public class ApiController {
     public ResponseEntity<String> createPlace(@RequestParam String namePlace,
                                               @RequestParam String descPlace,
                                               @RequestParam Long placeTypeId,
-                                              @RequestParam String userNickname) {
-        // place_type exist
-        Optional<PlaceType> placeTypeOptional = placeTypeRepository.findById(placeTypeId);
+                                              @RequestParam String userNickname,
+                                              @RequestParam BigDecimal pos_x,
+                                              @RequestParam BigDecimal pos_y) {
+        // Check if place type exists
+        Optional<PlaceType> placeTypeOptional = placeTypeService.findById(placeTypeId);
         if (!placeTypeOptional.isPresent()) {
-            return ResponseEntity.status(400).body("Tipo de lugar no encontrado.");
+            return ResponseEntity.status(400).body("Place type not found.");
         }
 
-        // user exist
+        // Check if user exists
         Optional<User> userOptional = userService.getUserByNickname(userNickname);
         if (!userOptional.isPresent()) {
-            return ResponseEntity.status(400).body("Usuario no encontrado.");
+            return ResponseEntity.status(400).body("User not found.");
         }
 
         // Create new place
@@ -172,11 +206,13 @@ public class ApiController {
         newPlace.setDescPlace(descPlace);
         newPlace.setPlaceType(placeTypeOptional.get());
         newPlace.setUser(userOptional.get());
+        newPlace.setpos_x(pos_x); // Set latitude
+        newPlace.setpos_y(pos_y); // Set longitude
+        newPlace.setLikes(0);
 
-        // Save on the db
+        // Save in the database
         placeService.savePlace(newPlace);
 
-        // Return success
-        return ResponseEntity.status(201).body("Lugar creado con éxito.");
+        return ResponseEntity.status(201).body("Place created successfully.");
     }
 }

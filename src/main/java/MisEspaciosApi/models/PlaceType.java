@@ -18,13 +18,19 @@ public class PlaceType {
     private String icon;
 
     @ManyToOne
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = true) // Asegura la FK
-    private User id_user;
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = true)
+    private User user; // Fixed field name
 
-    // Getters y Setters
-    public Long getid_type() { return id_type; }
-    public void setid_type(Long id_type) { this.id_type = id_type; }
+    // Getters and Setters
+    public Long getId_type() { return id_type; }
+    public void setId_type(Long id_type) { this.id_type = id_type; }
 
-    public String getname_type() { return name_type; }
-    public void setname_type(String name_type) { this.name_type = name_type; }
+    public String getName_type() { return name_type; }
+    public void setName_type(String name_type) { this.name_type = name_type; }
+
+    public String getIcon() { return icon; }
+    public void setIcon(String icon) { this.icon = icon; }
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 }
