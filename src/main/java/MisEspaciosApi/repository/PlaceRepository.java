@@ -1,5 +1,6 @@
 package MisEspaciosApi.repository;
 
+import MisEspaciosApi.dto.PlaceDTO;
 import MisEspaciosApi.models.Place;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,4 +28,14 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
                                               @Param("lngMax") double lngMax,
                                               @Param("username") String username);
 
+    @Query("""
+            SELECT new MisEspaciosApi.dto.PlaceDTO(
+                p.idPlace, p.namePlace, p.descPlace, 
+                p.pos_x, p.pos_y, p.likes, 
+                p.image, p.isPrivate, p.placeType, p.user.nickname
+            )
+            FROM Place p
+            WHERE p.user.nickname = :nickname AND p.isPrivate = false
+            """)
+    List<PlaceDTO> findPublicPlacesByUserNickname(@Param("nickname") String nickname);
 }

@@ -18,12 +18,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    // Get all users
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    // Get user by nickname
     public Optional<User> getUserByNickname(String nickname) {
         return userRepository.findByNickname(nickname);
     }
@@ -34,5 +32,9 @@ public class UserService {
 
     public void saveUser(User user) {
         userRepository.save(user);
+    }
+
+    public int getFollowersCount(int userId) {
+        return userRepository.countFollowersByUserId(userId);
     }
 }

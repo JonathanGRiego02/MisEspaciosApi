@@ -122,6 +122,31 @@ public class ApiController {
         return ResponseEntity.ok(places);
     }
 
+    // Get the followers count of a user
+    @GetMapping("/users/{nickname}/followers")
+    public ResponseEntity<Integer> getFollowersCount(@PathVariable String nickname) {
+        Optional<User> userOptional = userService.getUserByNickname(nickname);
+
+        if (userOptional.isPresent()) {
+            int followersCount = userService.getFollowersCount(userOptional.get().getid_user().intValue());
+            return ResponseEntity.ok(followersCount);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    // Get public places of a user
+    @GetMapping("/places/public/{nickname}")
+    public ResponseEntity<List<PlaceDTO>> getPublicPlacesByUser(@PathVariable String nickname) {
+        List<PlaceDTO> publicPlaces = placeService.getPublicPlacesByUserNickname(nickname);
+
+        if (publicPlaces.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(publicPlaces);
+    }
+
     // POST
 
     // Validate login
@@ -144,6 +169,21 @@ public class ApiController {
         }
 
         return ResponseEntity.status(401).build();
+    }
+
+    // Update the user's privacy setting
+    @PutMapping("/users/{nickname}/privacy")
+    public ResponseEntity<Void> updateUserPrivacy(@PathVariable String nickname, @RequestParam boolean isPrivate) {
+        Optional<User> userOptional = userService.getUserByNickname(nickname);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setPrivate(isPrivate); // update the isPrivate field
+            userService.saveUser(user); // save the updated user
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Register a new user
@@ -214,5 +254,15 @@ public class ApiController {
         placeService.savePlace(newPlace);
 
         return ResponseEntity.status(201).body("Place created successfully.");
+    }
+
+    // DELETE
+    @DeleteMapping("/places/{id}")
+    public ResponseEntity<String> deletePlace(@PathVariable Long id) {
+        if (placeService.deletePlace(id)) {
+            return ResponseEntity.ok("Place deleted successfully.");
+        } else {
+            return ResponseEntity.status(404).body("Place not found.");
+        }
     }
 }

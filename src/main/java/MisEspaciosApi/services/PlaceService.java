@@ -16,7 +16,6 @@ public class PlaceService {
         this.placeRepository = placeRepository;
     }
 
-    // Get places by username
     public List<PlaceDTO> GetPlacesByUsername(String username) {
         List<Place> places = placeRepository.findPlacesByUsername(username);
         return places.stream()
@@ -34,7 +33,7 @@ public class PlaceService {
                 ))
                 .toList();
     }
-    // Method to get all places
+
     public List<Place> ObtainAllPlaces() {
         return placeRepository.findAll();
     }
@@ -62,8 +61,20 @@ public class PlaceService {
                 .toList();
     }
 
-    // Method to save a place
     public void savePlace(Place place) {
-        placeRepository.save(place);  // Guardamos el lugar usando el repositorio
+        placeRepository.save(place);
+    }
+
+    public boolean deletePlace(Long id) {
+        if (placeRepository.existsById(id)) {
+            placeRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    public List<PlaceDTO> getPublicPlacesByUserNickname(String nickname) {
+        return placeRepository.findPublicPlacesByUserNickname(nickname);
     }
 }
+

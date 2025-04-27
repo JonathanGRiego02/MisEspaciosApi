@@ -9,7 +9,7 @@
 ## 🌐 API
 
 - [x] Solicitud `POST`: para introducir un lugar a la base de datos
-- [ ] Solicitud `DELETE`: para eliminar un lugar (propio)
+- [X] Solicitud `DELETE`: para eliminar un lugar (propio)
 
 ---
 
@@ -17,16 +17,16 @@
 
 ### 📑 Pestañas del menú lateral
 
-- [ ] Perfil
+- [X] Perfil
 - [ ] Ajustes
 
 ### 📌 Funcionalidades
 
 - [X] Crear tipos y modificarlos en los lugares
-- [ ] Visualizar perfiles de otros usuarios
+- [x] Visualizar perfiles de otros usuarios
 
 ### ⚙️ Ajustes
 
-- [ ] Cambiar privacidad
+- [X] Cambiar privacidad
 - [ ] Cambiar iconos de los lugares
-- [ ] Volver al login
+- [X] Volver al login
